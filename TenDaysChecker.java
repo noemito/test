@@ -3,19 +3,37 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
-public class Main {
+import Data.Customers;
 
+public class Main {
+	
+	public static Scanner myScanner = new Scanner(System.in);
+	
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
+		// TODO Auto-generated method 
+		
+		System.out.print("FirstName: ");
+		String firstName = myScanner.next();
+		System.out.print("LastName: ");
+		String lastName = myScanner.next();
+        
+		Customers customer = new Customers(firstName,lastName);
+		
+		System.out.println(customer.getName());
+		
+		DateTimeFormatter dateFormater = DateTimeFormatter.ofPattern("MMM-dd-yyyy");
+		
+		System.out.println("SignUp Date: " + customer.getDateSignUp().format(dateFormater));
+		LocalDate date = DueDate(customer.getDateSignUp().getMonthValue(), customer.getDateSignUp().getDayOfMonth());
+		System.out.println("Due date: " + date.format(dateFormater));   
+		
+		
+    }
+	
+	public static LocalDate DueDate(int month, int day) {
+		// System.out.println("test!");
+		
 		int increment = 0;
-		
-		
-		Scanner myScanner = new Scanner(System.in);
-		
-		System.out.println("Please Enter The Month:");
-		int month = myScanner.nextInt();
-		System.out.println("Please Enter The Day:");
-		int day = myScanner.nextInt();
 		
         boolean ifNotTenDays = true;
         
@@ -48,27 +66,30 @@ public class Main {
           
         }
         
-        DateTimeFormatter dateFormater = DateTimeFormatter.ofPattern("MMM-dd-yyyy");
         
-        String formatDueDate = finalDate.format(dateFormater);
         
-        System.out.println("Due Date: " + formatDueDate);
-        
-        //TODO: CHECK THE REMAINING DAYS ON THE TIME THAT THEY SIGN UP
         
         LocalDate dateNow = LocalDate.now();
         
         int defDate = finalDate.compareTo(dateNow);
-        
+        	
         
         if (defDate <= 0) 
         	System.out.println("Date Exceeded!!!!");
         else 
-        	System.out.println("Days left berfore Due: " + defDate+ "days!");
-     
+        	System.out.println("Days left: " + defDate + " days");
+        
+        
+        return finalDate;
+        
+        //String formatDueDate = finalDate.format(dateFormater);
+        
+        //System.out.println("Due Date: " + formatDueDate);
+        
+        //TODO: CHECK THE REMAINING DAYS ON THE TIME THAT THEY SIGN UP
         
         
         
-    }
+	}
 }
 
